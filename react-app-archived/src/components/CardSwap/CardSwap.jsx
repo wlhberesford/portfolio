@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef } from 'react';
+import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 import './CardSwap.css';
 
@@ -13,6 +13,7 @@ const makeSlot = (i, distX, distY, total) => ({
   z: -i * distX * 1.5,
   zIndex: total - i
 });
+
 const placeNow = (el, slot, skew) =>
   gsap.set(el, {
     x: slot.x,
@@ -38,6 +39,9 @@ const CardSwap = ({
   easing = 'elastic',
   children
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const visibilityRef = useRef(false);
+  
   const config =
     easing === 'elastic'
       ? {
@@ -65,17 +69,53 @@ const CardSwap = ({
   );
 
   const order = useRef(Array.from({ length: childArr.length }, (_, i) => i));
-
   const tlRef = useRef(null);
   const intervalRef = useRef();
   const container = useRef(null);
 
+  // Intersection Observer setup
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        visibilityRef.current = entry.isIntersecting;
+        
+        // Pause/Resume animations based on visibility
+        if (entry.isIntersecting) {
+          tlRef.current?.resume();
+        } else {
+          tlRef.current?.pause();
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    if (container.current) {
+      observer.observe(container.current);
+    }
+
+    return () => {
+      if (container.current) {
+        observer.unobserve(container.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     const total = refs.length;
     refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
     const swap = () => {
-      if (order.current.length < 2) return;
+      if (order.current.length < 2 || !visibilityRef.current) return;
 
       const [front, ...rest] = order.current;
       const elFront = refs[front].current;
@@ -110,6 +150,7 @@ const CardSwap = ({
       tl.addLabel('return', `promote+=${config.durMove * config.returnDelay}`);
       tl.call(
         () => {
+          if (!visibilityRef.current) return;
           gsap.set(elFront, { zIndex: backSlot.zIndex });
         },
         undefined,
@@ -128,42 +169,76 @@ const CardSwap = ({
       );
 
       tl.call(() => {
-        order.current = [...rest, front];
+        if (visibilityRef.current) {
+          order.current = [...rest, front];
+        }
       });
     };
 
-    swap();
-    intervalRef.current = window.setInterval(swap, delay);
+    // Initial swap and interval setup
+    if (visibilityRef.current) {
+      swap();
+      intervalRef.current = window.setInterval(() => {
+        if (visibilityRef.current) {
+          swap();
+        }
+      }, delay);
+    }
 
     if (pauseOnHover) {
       const node = container.current;
       const pause = () => {
+        if (!visibilityRef.current) return;
         tlRef.current?.pause();
-        clearInterval(intervalRef.current);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
       };
       const resume = () => {
+        if (!visibilityRef.current) return;
         tlRef.current?.play();
-        intervalRef.current = window.setInterval(swap, delay);
+        if (!intervalRef.current) {
+          intervalRef.current = window.setInterval(() => {
+            if (visibilityRef.current) {
+              swap();
+            }
+          }, delay);
+        }
       };
+      
       node.addEventListener('mouseenter', pause);
       node.addEventListener('mouseleave', resume);
       return () => {
         node.removeEventListener('mouseenter', pause);
         node.removeEventListener('mouseleave', resume);
-        clearInterval(intervalRef.current);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
       };
     }
-    return () => clearInterval(intervalRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, isVisible, refs.length]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)
       ? cloneElement(child, {
           key: i,
           ref: refs[i],
-          style: { width, height, ...(child.props.style ?? {}) },
+          style: {
+            width,
+            height,
+            opacity: isVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out',
+            ...child.props.style
+          },
           onClick: e => {
+            if (!isVisible) return;
             child.props.onClick?.(e);
             onCardClick?.(i);
           }
@@ -172,7 +247,16 @@ const CardSwap = ({
   );
 
   return (
-    <div ref={container} className="card-swap-container" style={{ width, height }}>
+    <div
+      ref={container}
+      className="card-swap-container"
+      style={{
+        width,
+        height,
+        opacity: isVisible ? 1 : 0,
+        visibility: isVisible ? 'visible' : 'hidden'
+      }}
+    >
       {rendered}
     </div>
   );

@@ -1,0 +1,64 @@
+.Experience {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Make sure arrows are visible */
+.splide__arrows {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    z-index: 10;
+}
+
+.splide__arrow {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    transition: background 0.3s;
+}
+
+.splide__arrow:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.splide__arrow--prev {
+    left: 1em;
+}
+
+.splide__arrow--next {
+    right: 1em;
+}
+
+/* Make sure pagination is visible */
+.splide__pagination {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.splide__pagination__page {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    margin: 0 5px;
+    transition: background 0.3s;
+}
+
+.splide__pagination__page.is-active {
+    background: rgba(255, 255, 255, 1);
+}
+
+/* Ensure slides are properly contained */
+.splide__track {
+    overflow: visible;
+}
+
+.splide__list {
+    height: 100%;
+}

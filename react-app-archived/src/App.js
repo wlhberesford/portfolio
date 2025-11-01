@@ -3,7 +3,7 @@ import Hero from "./Sections/Hero/Hero"
 import Education from './Sections/Education/Education';
 import Nav from './components/Nav/Nav';
 // import AboutMe from './Sections/AboutMe/AboutMe';
-// import Experience from './Sections/Experience/Experience';
+import Experience from './Sections/Experience/Experience';
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
         <Nav/>
         <Hero/>
         <Education/>
-        {/* <Experience/> */}
+        <Experience/>
 
       </div>
   );

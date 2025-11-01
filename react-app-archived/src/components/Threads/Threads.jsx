@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
 
 import './Threads.css';
@@ -120,12 +120,35 @@ void main() {
 }
 `;
 
-const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseInteraction = false, ...rest }) => {
+const Threads = ({ color = [0, 0.67, 0.67], amplitude = 1, distance = 0, enableMouseInteraction = false, ...rest }) => {
   const containerRef = useRef(null);
   const animationFrameId = useRef();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current || !isVisible) return;
     const container = containerRef.current;
 
     const renderer = new Renderer({ alpha: true });
@@ -181,6 +204,8 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
     }
 
     function update(t) {
+      if (!isVisible) return;
+      
       if (enableMouseInteraction) {
         const smoothing = 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
@@ -196,7 +221,10 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
       renderer.render({ scene: mesh });
       animationFrameId.current = requestAnimationFrame(update);
     }
-    animationFrameId.current = requestAnimationFrame(update);
+    
+    if (isVisible) {
+      animationFrameId.current = requestAnimationFrame(update);
+    }
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
@@ -209,7 +237,7 @@ const Threads = ({ color = [1, 1, 1], amplitude = 1, distance = 0, enableMouseIn
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [color, amplitude, distance, enableMouseInteraction]);
+  }, [color, amplitude, distance, enableMouseInteraction, isVisible]);
 
   return <div ref={containerRef} className="threads-container" {...rest} />;
 };
