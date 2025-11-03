@@ -4,7 +4,7 @@ import Education from './Sections/Education/Education';
 import Nav from './components/Nav/Nav';
 // import AboutMe from './Sections/AboutMe/AboutMe';
 import Experience from './Sections/Experience/Experience';
-import Projects from './Sections/Projects/Projects';
+// import Projects from './Sections/Projects/Projects';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <Hero/>
         <Education/>
         <Experience/>
-        <Projects/>
+        {/* <Projects/> */}
 
       </div>
   );
