@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
@@ -20,7 +21,33 @@ function Button(text, link ) {
 
 
 function Nav() {
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY < 10) {
+                // Always show at the top
+                setIsVisible(true);
+            } else if (currentScrollY > lastScrollY) {
+                // Scrolling down
+                setIsVisible(false);
+            } else {
+                // Scrolling up
+                setIsVisible(true);
+            }
+            
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY]);
 
     return (
         <div style={{  
@@ -28,10 +55,13 @@ function Nav() {
             top: 0, 
             left: 0, 
             width: '100%', 
-            height: '100%', 
-            zIndex: 10
+            height: 'auto',
+            zIndex: 1000,
+            pointerEvents: 'none',
+            transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+            transition: 'transform 0.2s ease-in-out'
         }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{ pointerEvents: 'auto' }}>
             <Grid size={2}>
             </Grid>
             <Grid size={2}>
