@@ -1,0 +1,66 @@
+.project-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) !important;
+}
+
+.project-card img {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Smooth transitions for all interactive elements */
+.project-card a {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Ensure consistent button sizing */
+.project-card a {
+  display: inline-block;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-card {
+    padding: 1.5rem;
+    min-height: 350px;
+  }
+  
+  .project-card h3 {
+    font-size: 1.5rem !important;
+  }
+  
+  .project-card p {
+    font-size: 0.9rem !important;
+  }
+  
+  .project-card a {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1.2rem !important;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    padding: 1rem;
+  }
+  
+  .project-card div[style*="flex"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  .project-card a {
+    text-align: center;
+    width: 100%;
+  }
+}
