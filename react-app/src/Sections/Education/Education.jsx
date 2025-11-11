@@ -48,9 +48,10 @@ function Education() {
             height={"30vw"}
             cardDistance={60}
             verticalDistance={60}
-            delay={7500}
-            pauseOnHover={true}
+            delay={5000}
+            pauseOnHover={false}
             easing='elastic'
+            // onCardClick = {}
           >
             <SwapCard style={{ padding: "2rem", color: "#DFDEDC" }}>
                 <img src={CSCILogo} alt="RPI School of Science"></img>

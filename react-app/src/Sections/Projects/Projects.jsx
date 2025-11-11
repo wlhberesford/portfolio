@@ -1,7 +1,11 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
-import OptumLogo from '../../img/Optum_logo.png';
+import BigDataBowl from '../../img/BigDataBowl.jpg';
+import RSEi from '../../img/Logo_Orange.png';
+import DependNetwork from '../../img/texas_depend_post.png';
+import TwitterLogo from '../../img/Twitter-Logo.png';
+import HatTrick from '../../img/HatTrickDemo.jpg';
 
 /*
 {
@@ -26,7 +30,7 @@ function Projects() {
       githubUrl: 'https://github.com/yourusername/algorithm-visualizer',
       demoUrl: 'https://algorithm-viz-demo.netlify.app',
       imageUrl:
-        'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&q=80&w=2070',
+        BigDataBowl,
     },
     {
       title: 'Alumni Networking Interface',
@@ -36,7 +40,7 @@ function Projects() {
       githubUrl: 'https://github.com/yourusername/budget-planner',
       demoUrl: 'https://student-budget-planner.netlify.app',
       imageUrl:
-        'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=2011',
+        RSEi,
     },
     {
       title: 'Sports Betting Arbitrage ETL',
@@ -65,7 +69,7 @@ function Projects() {
       githubUrl: 'https://github.com/yourusername/algorithm-visualizer',
       demoUrl: 'https://algorithm-viz-demo.netlify.app',
       imageUrl:
-        'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&q=80&w=2070',
+        DependNetwork,
     },
     {
       title: 'Tweet Influence Prediction',
@@ -75,7 +79,7 @@ function Projects() {
       githubUrl: 'https://github.com/yourusername/algorithm-visualizer',
       demoUrl: 'https://algorithm-viz-demo.netlify.app',
       imageUrl:
-        'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&q=80&w=2070',
+        TwitterLogo,
     },
     {
       title: 'Hat Trick',
@@ -83,9 +87,9 @@ function Projects() {
         'Submission for Future Business Leaders of America Competition, I built Soccer version of frogger which was presented at the national level',
       technologies: ['Python', 'Pygame', 'Photoshop'],
       githubUrl: 'https://github.com/yourusername/algorithm-visualizer',
-      demoUrl: 'https://algorithm-viz-demo.netlify.app',
+      demoUrl: 'https://youtu.be/u7woge-8GIk',
       imageUrl:
-        'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&q=80&w=2070',
+      HatTrick
     },
   ];
 
