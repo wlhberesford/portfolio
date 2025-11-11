@@ -9,6 +9,7 @@ import CSCILogo from '../../img/RPI_Lockup_Sci_Md_White.png';
 import HassLogo from '../../img/RPI_Lockup_HASS_Md_White (1).png';
 import EconLogo from '../../img/RPI_Lockup_Economics_Md_White.png';
 import GPFSLogo from '../../img/GPFSLogo.png';
+import QuantaLogo from '../../img/QuantaLogo.webp';
 
 function Experience() {
   const [activeSlide, setActiveSlide] = React.useState(0);
@@ -67,7 +68,7 @@ function Experience() {
                                         Software Engineer Intern
                                     </h3>
                                     <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
-                                        June 2024 - August 2024
+                                        Summer 2024
                                     </p>
                                     <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
                                         At Optum (UnitedHealth Group), I helped develop Hello Holly, an AI-powered calling system 
@@ -99,7 +100,7 @@ function Experience() {
                                         Undergraduate Researcher (Economics Department)
                                     </h3>
                                     <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
-                                        Febuary 2025 - December 2025
+                                        Spring and Fall 2025
                                     </p>
                                     <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
                                         As an Undergraduate Researcher in Economics, I study algorithmic collusion under Professor Heng Liu, 
@@ -131,7 +132,7 @@ function Experience() {
                                         Software Engineer Intern
                                     </h3>
                                     <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
-                                        June 2025 - August 2025
+                                        Summer 2025
                                     </p>
                                     <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
                                         At Optum, I built a multi-agent AI DevOps assistant using GPT-4.1, LangChain, and RAG, integrated 
@@ -162,7 +163,7 @@ function Experience() {
                                         Undergraduate Researcher (Physics Department)
                                     </h3>
                                     <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
-                                        October 2025 - December 2025
+                                        Fall 2025
                                     </p>
                                     <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
                                         As a Research Assistant in the Physics Department, I developed a Python ETL pipeline to extract, clean, 
@@ -194,7 +195,7 @@ function Experience() {
                                         Data Intern
                                     </h3>
                                     <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
-                                        January 2026 - May 2026
+                                        Winter & Spring 2026
                                     </p>
                                     <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
                                         Supporting the data team at a private equity services firm by building Power BI dashboards, 
@@ -210,11 +211,30 @@ function Experience() {
                             <div style={{
                                 height: "70vh",
                                 width: "100%",
-                                background: "#464545",                                
+                                background: "#000",
                                 position: "relative",
-                                overflow: "hidden"
+                                overflow: "hidden",
+                                padding: "5rem",
+                                outline: "1px solid #DFDEDC",
+                                borderRadius: "1rem"
                             }}>
-                                <h1>Slide 3</h1>
+                                <div style={{ height: "50%", display: "flex", alignContent: "center", alignItems: "center"}}>
+                                    <img style={{width:"100%"}} src={QuantaLogo} alt="RPI School of Science" ></img>
+                                </div>
+                                <div style={{padding:"1rem"}}>
+                                    <h3 style={{fontSize:"4vh", fontFamily: "'Poppins', sans-serif", color:"#DFDEDC"}}>
+                                        Artificial Intelligence Consultant Intern
+                                    </h3>
+                                    <p style={{fontSize:"2.5vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
+                                        Summer 2026
+                                    </p>
+                                    <p style={{fontSize:"2vh", fontFamily: "'Poppins', sans-serif", color:"#A6A7A2"}}>
+                                        Collaborating directly with the Head of AI Insights to advise on company-wide AI and machine 
+                                        learning initiatives. Provide strategic guidance by translating complex technical concepts 
+                                        into actionable business decisions and conducting market and competitor analyses for large-scale 
+                                        AI data center projects within the power grid consulting sector.
+                                    </p>
+                                </div>
 
                             </div>
                     </SplideSlide>
