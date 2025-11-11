@@ -28,12 +28,12 @@ function Education() {
                 color:"#A6A7A2", 
                 textAlign:"left",
                 textIndent:"3vw"}}>
-                I’ve built a multidisciplinary foundation in Computer Science and Economics, 
-                combining technical depth with a focus on human and market behavior. My studies 
-                span machine learning, network science, and econometrics, and I’m now continuing 
-                this path through graduate-level work in economic modeling and data analytics. 
-                Across both fields, I aim to bridge technology and insight—using data-driven methods 
-                to understand and solve real-world problems.
+                During my undergrad years at Rensselaer Polytechnic Institute I’ve 
+                built a multidisciplinary foundation in Computer Science and Economics, 
+                focusing my studies around machine learning, data, and statistics. 
+                I am continuing this by prusing a masters in Economics here at RPI. I've 
+                built my curriculum to focuse on Econometrics, Game Theory, and Euntropenuership 
+                to give myself the background in building andy applying data driven systems.
             </p>
           </div>
         </Grid>
@@ -48,9 +48,10 @@ function Education() {
             height={"30vw"}
             cardDistance={60}
             verticalDistance={60}
-            delay={7500}
-            pauseOnHover={true}
+            delay={5000}
+            pauseOnHover={false}
             easing='elastic'
+            // onCardClick = {}
           >
             <SwapCard style={{ padding: "2rem", color: "#DFDEDC" }}>
                 <img src={CSCILogo} alt="RPI School of Science"></img>

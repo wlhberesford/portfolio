@@ -1,124 +1,193 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import React, { useState } from 'react';
+import './ProjectCard.css';
 
-
-
-
-
-export default function ProjectCard({ image, title, desc, skills = [] }) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+const ProjectCard = ({ title, description, technologies, githubUrl, demoUrl, imageUrl }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div style={{ position: 'relative', zIndex: 1 }}>
-        <div  className="project-card" style={{
-                height: "100%",
-                width: "100%",
-                background: "#464545",
-                padding: "2rem",
-                // position: "relative",
-                overflow: "hidden",
-                // outline: "1px solid #DFDEDC",
-                borderRadius: "1rem"
-
-            }}
-            onClick={handleOpen}
-            onMouseDown={(e) => e.preventDefault()}>
-                <div style={{display: "grid", placeItems:"center"}}>
-                    <img src={image}  alt={"Oops no image"} style={{height: "7rem"}}></img>
-               
-
-                    <h3 style={{fontSize:"rem", fontFamily: "'Poppins', sans-serif", color:"#DFDEDC"}}>
-                        {title}
-                    </h3>
-                    
-                    {/* Skills section at the bottom */}
-                    <div style={{ 
-                        display: "flex", 
-                        flexWrap: "wrap", 
-                        gap: "0.5rem", 
-                        marginTop: "auto",
-                        paddingTop: "1rem"
-                    }}>
-                        {skills.map((skill, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    padding: "0.4rem 0.8rem",
-                                    border: "1px solid #DFDEDC",
-                                    borderRadius: "0.5rem",
-                                    fontSize: "0.875rem",
-                                    color: "#A6A7A2",
-                                    fontFamily: "'Poppins', sans-serif",
-                                    backgroundColor: "transparent"
-                                }}
-                            >
-                                {skill}
-                            </div>
-                        ))}
-                    </div>
-                    
-                    </div>
-                </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+    <div 
+      className="project-card"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        background: "#000",
+        border: "1px solid #464545",
+        borderRadius: "1rem",
+        padding: "2rem",
+        height: "auto",
+        minHeight: "400px",
+        position: "relative",
+        overflow: "hidden",
+        transition: "all 0.3s ease",
+        transform: isHovered ? "translateY(-8px)" : "translateY(0)",
+        borderColor: isHovered ? "#00ACAC" : "#464545",
+        boxShadow: isHovered 
+          ? "0 20px 40px rgba(0, 172, 172, 0.1)" 
+          : "0 4px 20px rgba(0, 0, 0, 0.3)"
+      }}
+    >
+      {/* Image Section */}
+      {imageUrl && (
         <div style={{
-                height: "50vh",
-                width: "50vh",
-                background: "#464545",
-                position: "relative",
-                overflow: "hidden",
-                // outline: "1px solid #DFDEDC",
-                borderRadius: "1rem"
+          height: "200px",
+          width: "100%",
+          marginBottom: "1.5rem",
+          borderRadius: "0.5rem",
+          overflow: "hidden",
+          position: "relative"
+        }}>
+          <img 
+            src={imageUrl} 
+            alt={title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transition: "transform 0.3s ease",
+              transform: isHovered ? "scale(1.05)" : "scale(1)"
             }}
-            onClick={handleOpen}
-            onMouseDown={(e) => e.preventDefault()}>
-                <div style={{display: "grid", placeItems:"center"}}>
-                    <img src={image}  alt={"Oops no image"} style={{height: "50%"}}></img>
-                </div>
-                <div style={{padding:"1rem"}}>
+          />
+          <div style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: isHovered 
+              ? "linear-gradient(45deg, rgba(0, 172, 172, 0.1), rgba(0, 0, 0, 0.3))"
+              : "linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2))",
+            transition: "background 0.3s ease"
+          }} />
+        </div>
+      )}
 
-                    <h3 style={{fontSize:"4vh", fontFamily: "'Poppins', sans-serif", color:"#DFDEDC"}}>
-                        {title}
-                    </h3>
-                    
-                    {/* Skills section at the bottom */}
-                    <div style={{ 
-                        display: "flex", 
-                        flexWrap: "wrap", 
-                        gap: "0.5rem", 
-                        marginTop: "auto",
-                        paddingTop: "1rem"
-                    }}>
-                        {skills.map((skill, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    padding: "0.4rem 0.8rem",
-                                    border: "1px solid #DFDEDC",
-                                    borderRadius: "0.5rem",
-                                    fontSize: "0.875rem",
-                                    color: "#A6A7A2",
-                                    fontFamily: "'Poppins', sans-serif",
-                                    backgroundColor: "transparent"
-                                }}
-                            >
-                                {skill}
-                            </div>
-                        ))}
-                    </div>
-                    
-                    </div>
-                </div>
-      </Modal>
+      {/* Content Section */}
+      <div style={{ position: "relative", zIndex: 2 }}>
+        {/* Title */}
+        <h3 style={{
+          fontSize: "1.75rem",
+          fontFamily: "'Poppins', sans-serif",
+          fontWeight: "600",
+          color: "#DFDEDC",
+          marginBottom: "1rem",
+          lineHeight: "1.3",
+          transition: "color 0.3s ease"
+        }}>
+          {title}
+        </h3>
+
+        {/* Description */}
+        <p style={{
+          fontSize: "1rem",
+          fontFamily: "'Poppins', sans-serif",
+          color: "#A6A7A2",
+          lineHeight: "1.6",
+          marginBottom: "1.5rem",
+          opacity: 0.9
+        }}>
+          {description}
+        </p>
+
+        {/* Technologies */}
+        {technologies && technologies.length > 0 && (
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+            marginBottom: "2rem"
+          }}>
+            {technologies.map((tech, index) => (
+              <span
+                key={index}
+                style={{
+                  fontSize: "0.85rem",
+                  fontFamily: "'Poppins', sans-serif",
+                  padding: "0.25rem 0.75rem",
+                  backgroundColor: isHovered ? "rgba(0, 172, 172, 0.15)" : "rgba(70, 69, 69, 0.3)",
+                  color: isHovered ? "#00ACAC" : "#A6A7A2",
+                  borderRadius: "1rem",
+                  border: `1px solid ${isHovered ? "rgba(0, 172, 172, 0.3)" : "rgba(70, 69, 69, 0.5)"}`,
+                  transition: "all 0.3s ease",
+                  fontWeight: "500"
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div style={{
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center"
+        }}>
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "0.95rem",
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: "500",
+                color: "#A6A7A2",
+                textDecoration: "none",
+                padding: "0.75rem 1.5rem",
+                border: "1px solid #464545",
+                borderRadius: "0.5rem",
+                transition: "all 0.3s ease",
+                backgroundColor: "transparent"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#000";
+                e.target.style.backgroundColor = "#DFDEDC";
+                e.target.style.borderColor = "#DFDEDC";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "#A6A7A2";
+                e.target.style.backgroundColor = "transparent";
+                e.target.style.borderColor = "#464545";
+              }}
+            >
+              View Code
+            </a>
+          )}
+          
+          {demoUrl && (
+            <a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: "0.95rem",
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: "500",
+                color: "#000",
+                textDecoration: "none",
+                padding: "0.75rem 1.5rem",
+                backgroundColor: "#00ACAC",
+                border: "1px solid #00ACAC",
+                borderRadius: "0.5rem",
+                transition: "all 0.3s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "transparent";
+                e.target.style.color = "#00ACAC";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#00ACAC";
+                e.target.style.color = "#000";
+              }}
+            >
+              Live Demo
+            </a>
+          )}
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default ProjectCard;
