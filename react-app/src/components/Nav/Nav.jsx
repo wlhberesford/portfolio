@@ -65,16 +65,16 @@ function Nav() {
             <Grid size={2}>
             </Grid>
             <Grid size={2}>
-                {Button("Home", "google.com")}
+                {Button("Home", "#Hero")}
             </Grid>
             <Grid size={2}>
-                {Button("Experience", "google.com")}
+                {Button("Experience", "#Experience")}
             </Grid>
             <Grid size={2}>
-                {Button("Education", "google.com")}
+                {Button("Education", "#Education")}
             </Grid>
             <Grid size={2}>
-                {Button("Projects", "google.com")}
+                {Button("Projects", "#Projects")}
             </Grid>
             <Grid size={2}>
             </Grid>

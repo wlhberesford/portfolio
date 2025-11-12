@@ -4,12 +4,15 @@ import Threads from "../../components/Threads/Threads";
 
 function Hero() {
   return (
-    <div className="Hero" style={{
+    <div className="Hero" 
+      id = "Hero"
+      style={{
       height: "90%",
       width: "100%",
       backgroundColor:"#000"
     }}>
-      <div style={{  position: 'absolute', 
+      <div       
+        style={{  position: 'absolute', 
         top: 0, 
         left: 0, 
         width: '100%', 

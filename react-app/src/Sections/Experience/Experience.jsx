@@ -13,7 +13,9 @@ import QuantaLogo from '../../img/QuantaLogo.webp';
 function Experience() {
 
   return (
-    <div className="Experience" style={{
+    <div className="Experience" 
+        id = "Experience"
+        style={{
       height: "100vh",
       width: "100vw",
       background: "#000000",

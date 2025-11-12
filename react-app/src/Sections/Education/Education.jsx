@@ -10,7 +10,9 @@ import EconLogo from '../../img/RPI_Lockup_Economics_Md_White.png';
 
 function Education() {
   return (
-    <div className="Education" style={{
+    <div className="Education" 
+      id = "Education" 
+    style={{
       height: "100vh",
       width: "100%",
       background: "#000000",

@@ -94,7 +94,9 @@ function Projects() {
   ];
 
   return (
-    <div className="Projects" style={{
+    <div className="Projects" 
+      id = "Projects"
+      style={{
       minHeight: "100vh",
       width: "100vw",
       background: "#000000",
