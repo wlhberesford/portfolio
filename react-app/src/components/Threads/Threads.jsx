@@ -126,6 +126,7 @@ const Threads = ({ color = [0, 0.67, 0.67], amplitude = 1, distance = 0, enableM
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const currentContainer = containerRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -136,13 +137,13 @@ const Threads = ({ color = [0, 0.67, 0.67], amplitude = 1, distance = 0, enableM
       }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    if (currentContainer) {
+      observer.observe(currentContainer);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (currentContainer) {
+        observer.unobserve(currentContainer);
       }
     };
   }, []);

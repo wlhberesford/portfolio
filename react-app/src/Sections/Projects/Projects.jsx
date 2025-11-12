@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
 import BigDataBowl from '../../img/BigDataBowl.jpg';
 import RSEi from '../../img/Logo_Orange.png';
