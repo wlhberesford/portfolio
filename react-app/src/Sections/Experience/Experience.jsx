@@ -7,12 +7,10 @@ import OptumLogo from '../../img/Optum_logo.png';
 
 import CSCILogo from '../../img/RPI_Lockup_Sci_Md_White.png';
 import HassLogo from '../../img/RPI_Lockup_HASS_Md_White (1).png';
-import EconLogo from '../../img/RPI_Lockup_Economics_Md_White.png';
 import GPFSLogo from '../../img/GPFSLogo.png';
 import QuantaLogo from '../../img/QuantaLogo.webp';
 
 function Experience() {
-  const [activeSlide, setActiveSlide] = React.useState(0);
 
   return (
     <div className="Experience" style={{

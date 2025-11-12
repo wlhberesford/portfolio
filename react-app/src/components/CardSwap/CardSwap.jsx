@@ -42,24 +42,27 @@ const CardSwap = ({
   const [isVisible, setIsVisible] = useState(false);
   const visibilityRef = useRef(false);
   
-  const config =
-    easing === 'elastic'
-      ? {
-          ease: 'elastic.out(0.6,0.9)',
-          durDrop: 2,
-          durMove: 2,
-          durReturn: 2,
-          promoteOverlap: 0.9,
-          returnDelay: 0.05
-        }
-      : {
-          ease: 'power1.inOut',
-          durDrop: 0.8,
-          durMove: 0.8,
-          durReturn: 0.8,
-          promoteOverlap: 0.45,
-          returnDelay: 0.2
-        };
+  const config = useMemo(
+    () =>
+      easing === 'elastic'
+        ? {
+            ease: 'elastic.out(0.6,0.9)',
+            durDrop: 2,
+            durMove: 2,
+            durReturn: 2,
+            promoteOverlap: 0.9,
+            returnDelay: 0.05
+          }
+        : {
+            ease: 'power1.inOut',
+            durDrop: 0.8,
+            durMove: 0.8,
+            durReturn: 0.8,
+            promoteOverlap: 0.45,
+            returnDelay: 0.2
+          },
+    [easing]
+  );
 
   const childArr = useMemo(() => Children.toArray(children), [children]);
   const refs = useMemo(
@@ -75,6 +78,7 @@ const CardSwap = ({
 
   // Intersection Observer setup
   useEffect(() => {
+    const currentContainer = container.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -97,13 +101,13 @@ const CardSwap = ({
       }
     );
 
-    if (container.current) {
-      observer.observe(container.current);
+    if (currentContainer) {
+      observer.observe(currentContainer);
     }
 
     return () => {
-      if (container.current) {
-        observer.unobserve(container.current);
+      if (currentContainer) {
+        observer.unobserve(currentContainer);
       }
     };
   }, []);
@@ -112,6 +116,7 @@ const CardSwap = ({
     if (!isVisible) return;
 
     const total = refs.length;
+    const currentConfig = config;
     refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
     const swap = () => {
@@ -124,11 +129,11 @@ const CardSwap = ({
 
       tl.to(elFront, {
         y: '+=500',
-        duration: config.durDrop,
-        ease: config.ease
+        duration: currentConfig.durDrop,
+        ease: currentConfig.ease
       });
 
-      tl.addLabel('promote', `-=${config.durDrop * config.promoteOverlap}`);
+      tl.addLabel('promote', `-=${currentConfig.durDrop * currentConfig.promoteOverlap}`);
       rest.forEach((idx, i) => {
         const el = refs[idx].current;
         const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
@@ -139,15 +144,15 @@ const CardSwap = ({
             x: slot.x,
             y: slot.y,
             z: slot.z,
-            duration: config.durMove,
-            ease: config.ease
+            duration: currentConfig.durMove,
+            ease: currentConfig.ease
           },
           `promote+=${i * 0.15}`
         );
       });
 
       const backSlot = makeSlot(refs.length - 1, cardDistance, verticalDistance, refs.length);
-      tl.addLabel('return', `promote+=${config.durMove * config.returnDelay}`);
+      tl.addLabel('return', `promote+=${currentConfig.durMove * currentConfig.returnDelay}`);
       tl.call(
         () => {
           if (!visibilityRef.current) return;
@@ -162,8 +167,8 @@ const CardSwap = ({
           x: backSlot.x,
           y: backSlot.y,
           z: backSlot.z,
-          duration: config.durReturn,
-          ease: config.ease
+          duration: currentConfig.durReturn,
+          ease: currentConfig.ease
         },
         'return'
       );
@@ -223,7 +228,7 @@ const CardSwap = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, isVisible, refs.length]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, isVisible, refs, config]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)
